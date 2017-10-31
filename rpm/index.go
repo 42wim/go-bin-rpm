@@ -12,9 +12,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/42wim/go-bin-rpm/stringexec"
 	"github.com/Masterminds/semver"
 	"github.com/mattn/go-zglob"
-	"github.com/mh-cbon/go-bin-rpm/stringexec"
 	"github.com/mh-cbon/verbose"
 	"github.com/pkg/errors"
 )
@@ -248,6 +248,7 @@ func (p *Package) RunBuild(buildAreaPath string, output string) error {
 	// otherwise
 	// [name]-[version]-[release].[arch].rpm
 	pkg := fmt.Sprintf("%s/RPMS/%s/%s-%s-%s.%s.rpm", buildAreaPath, arch, p.Name, p.Version, p.Release, arch)
+	outputreal := fmt.Sprintf("%s-%s-%s.%s.rpm", p.Name, p.Version, p.Release, arch)
 	v, err := semver.NewVersion(p.Version)
 	if err != nil {
 		return errors.WithStack(err)
@@ -255,7 +256,7 @@ func (p *Package) RunBuild(buildAreaPath string, output string) error {
 	if v.Prerelease() != "" {
 		pkg = fmt.Sprintf("%s/RPMS/%s/%s-%s.%s.%s.rpm", buildAreaPath, arch, p.Name, p.Version, p.Release, arch)
 	}
-	return cp(output, pkg)
+	return cp(outputreal, pkg)
 }
 
 // GenerateSpecFile generates the spec file.

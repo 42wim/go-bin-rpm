@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/mh-cbon/go-bin-rpm/rpm"
+	"github.com/42wim/go-bin-rpm/rpm"
 	"github.com/mh-cbon/verbose"
 	"github.com/urfave/cli"
 )
@@ -126,9 +126,11 @@ func generatePkg(c *cli.Context) error {
 	buildArea := c.String("build-area")
 	output := c.String("output")
 
-	if output == "" {
-		return cli.NewExitError("--output,-o argument is required", 1)
-	}
+	/*
+		if output == "" {
+			return cli.NewExitError("--output,-o argument is required", 1)
+		}
+	*/
 
 	rpmJSON := rpm.Package{}
 
